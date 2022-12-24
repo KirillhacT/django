@@ -1,0 +1,35 @@
+#Simple Tags - простые теги
+#Inclusion Tags - включающие теги
+
+
+Simple Tags
+Создаем файл simple_tag.py и в нем прописываем ->
+from django import template
+
+register = template.Library()
+
+@register.simple_tag()
+def get_category():
+    return Category.objects.all()
+
+Теперь в шаблоне указываем:
+{% load <название файла> %} В нашем случае simple_tag ->
+{% load simple_tag %}
+
+Далее в том же шаблоне мы можем пользоваться этим тегом
+{% get_category %} - возвращает результат функции get_category
+
+
+
+Inclusion Tags
+Создаем файл inclusion_tag.py и в нем прописываем ->
+from django import template
+
+register = template.Library()
+
+@register.inclusion_tag('women/list_categories.html') #Указываем, куда мы будем включать тег
+def show_categories():
+    cats = Category.objects.all()
+    return {"cats": cats}
+
+Coming soon...

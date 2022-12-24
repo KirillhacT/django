@@ -1,0 +1,16 @@
+{% extends 'example/base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock title%}
+
+
+{% block content %}
+    {% for post in posts %}
+            <h1><a href="{% url 'example_slug' post.slug %}">{{ post.name }}</a></h1>
+            <p>{{ post.posts }}</p>
+    {% endfor %}
+
+    <h2>Mixin is</h2>
+    <p>{{ example }} {{ code }}</p>
+{% endblock content %}

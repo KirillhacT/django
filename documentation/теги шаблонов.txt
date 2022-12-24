@@ -1,0 +1,8 @@
+{% static <путь до css>%} - подключение статических файлов (css)
+{% load static %}
+Пример - <link type="text/css" href="{% static 'women/css/styles.css' %}" rel="stylesheet" />
+
+
+{% url <имя> <атрибут> %} - формирование url адреса в шаблоне по имени из url.py
+атрибут необязателен, только если нужен динамический url
+Пример - {% url 'post' p.pk %}
