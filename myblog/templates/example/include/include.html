@@ -1,3 +1,37 @@
-<br>
-<br>
-<p>This is include</p>
+{% if request.user.is_authenticated %}
+    <p>{{ user.username }} | <a class="last" href="{% url 'logout' %}">Выйти</a></p>
+{% else %}
+    <a href="{% url 'register' %}">Регистрация</a>
+    <a href="{% url 'login' %}">Авторизация</a>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

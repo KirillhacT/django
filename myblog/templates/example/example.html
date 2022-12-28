@@ -2,7 +2,7 @@
 
 {% block title %}
     {{ title }}
-{% endblock title%}
+{% endblock title %}
 
 
 {% block content %}
@@ -13,4 +13,6 @@
 
     <h2>Mixin is</h2>
     <p>{{ example }} {{ code }}</p>
+
+    {% include "example/include/include.html"%}
 {% endblock content %}

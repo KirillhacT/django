@@ -34,7 +34,6 @@ class Example_Models(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
     posts = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="Посты", null=True)
-
     # def get_absolute_url(self):
     #     return reverse()
 
