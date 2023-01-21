@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python_on_lubanovich
 """Django's command-line utility for administrative tasks."""
 import os
 import sys

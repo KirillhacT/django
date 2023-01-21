@@ -5,6 +5,12 @@ from .models import Post, Comments, Example_Models
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "author")
 
+
+    # @admin.register(<Модель>)
+    # class <Имя класса>(admin.ModelAdmin):
+    #     <Параметры>
+
+
 @admin.register(Comments)
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ("name", "post")
@@ -13,4 +19,6 @@ class CommentsAdmin(admin.ModelAdmin):
 @admin.register(Example_Models)
 class CommentsAdmin(admin.ModelAdmin):
     list_display = ("name", "posts", "slug")
+
+
 

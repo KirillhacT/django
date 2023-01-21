@@ -25,8 +25,19 @@ class Comments(models.Model):
     class Meta:
         verbose_name = "Комментарий"
         verbose_name_plural = "Комментарии"
+
     def __str__(self):
         return f"{self.name}, {self.post}"
+
+class Likes(models.Model):
+    """Лайки"""
+    ip = models.CharField("IP адресс", max_length=100)
+    pos = models.ForeignKey(
+        Post,
+        verbose_name="Публикация",
+        on_delete=models.CASCADE
+    )
+
 
 
 

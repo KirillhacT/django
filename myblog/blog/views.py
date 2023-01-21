@@ -46,6 +46,34 @@ class AddComments(View):
         # print(f"{request.POST}")
         # return redirect("/")
 
+def get_client_ip(request):
+    x_forwaded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if x_forwaded_for:
+        ip = x_forwaded_for.split(",")[0]
+    else:
+        ip = request.META.get("REMOTE_ADDR")
+    return ip
+
+
+class AdLike(View):
+    def get(self, request, pk):
+        ip_client = get_client_ip(request)
+        try:
+            Likes.objects.get(ip=ip_client, pos_id=pk)
+            return redirect(f"/{pk}")
+        except:
+            new_like = Likes()
+            new_like.ip = ip_client
+            new_like.pos_id = int(pk)
+            new_like.save()
+            return redirect(f"/{pk}")
+
+
+
+
+
+
+
 
 #Slug example
 class Example(DataMixin, ListView):
