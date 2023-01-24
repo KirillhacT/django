@@ -7,13 +7,13 @@ class Post(models.Model):
     author = models.CharField("Имя автора", max_length=100)
     date = models.DateField("Дата публикации")
     image = models.ImageField("Изображение", upload_to='image/%Y')
+    slug = models.SlugField(max_length=100, unique=True, null=True)
     class Meta:
         """Для имени модели в админке"""
         verbose_name = "Запись"
         verbose_name_plural = "Записи"
     def __str__(self):
         return f"{self.title}, {self.author}"
-
 
 class Comments(models.Model):
     """Комментарий"""
@@ -28,17 +28,6 @@ class Comments(models.Model):
 
     def __str__(self):
         return f"{self.name}, {self.post}"
-
-class Likes(models.Model):
-    """Лайки"""
-    ip = models.CharField("IP адресс", max_length=100)
-    pos = models.ForeignKey(
-        Post,
-        verbose_name="Публикация",
-        on_delete=models.CASCADE
-    )
-
-
 
 
 class Example_Models(models.Model):

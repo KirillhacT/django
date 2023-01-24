@@ -10,27 +10,48 @@ from .form import CommentsForm, RegisterUserForm, LoginUserForm
 
 from .utils import *
 
-class PostView(View):
-    """"Вывод записи"""
-    def get(self, request):
-        posts = Post.objects.all()
-        template = 'blog/index.html'
-        context = {
-            "post_list": posts
-        }
-        return render(request, template, context=context)
+# class PostView(View):
+#     """"Вывод записи"""
+#     def get(self, request):
+#         posts = Post.objects.all()
+#         template = 'blog/index.html'
+#         context = {
+#             "post_list": posts
+#         }
+#         return render(request, template, context=context)
 
-class PostDetail(View):
-    """отдельная страница записи"""
-    def get(self, request, pk):
-        post = Post.objects.get(id=pk)
-        template = 'blog/blog_detail.html'
-        list_of_comments = Comments.objects.filter(post=post)
-        context = {
-            "post": post,
-            "list_of_comments": list_of_comments
-        }
-        return render(request, template, context=context)
+class PostView(ListView):
+    model = Post
+    template_name = "blog/index.html"
+    context_object_name = "post_list"
+    def get_queryset(self):
+        return Post.objects.all()
+
+
+# class PostDetail(View):
+#     """отдельная страница записи"""
+#     def get(self, request, slug):
+#         post = Post.objects.get(slug=slug)
+#         template = 'blog/blog_detail.html'
+#         list_of_comments = Comments.objects.filter(post=post)
+#         context = {
+#             "post": post,
+#             "list_of_comments": list_of_comments
+#         }
+#         return render(request, template, context=context)
+
+class PostDetail(ListView):
+    model = Post
+    template_name = "blog/blog_detail.html"
+    context_object_name = "post"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["list_of_comments"] = Comments.objects.filter(post=context["post"])
+        return context
+    def get_queryset(self):
+        return Post.objects.get(slug=self.kwargs.get("slug"))
+
+
 
 
 class AddComments(View):
@@ -45,35 +66,6 @@ class AddComments(View):
 
         # print(f"{request.POST}")
         # return redirect("/")
-
-def get_client_ip(request):
-    x_forwaded_for = request.META.get("HTTP_X_FORWARDED_FOR")
-    if x_forwaded_for:
-        ip = x_forwaded_for.split(",")[0]
-    else:
-        ip = request.META.get("REMOTE_ADDR")
-    return ip
-
-
-class AdLike(View):
-    def get(self, request, pk):
-        ip_client = get_client_ip(request)
-        try:
-            Likes.objects.get(ip=ip_client, pos_id=pk)
-            return redirect(f"/{pk}")
-        except:
-            new_like = Likes()
-            new_like.ip = ip_client
-            new_like.pos_id = int(pk)
-            new_like.save()
-            return redirect(f"/{pk}")
-
-
-
-
-
-
-
 
 #Slug example
 class Example(DataMixin, ListView):
@@ -90,6 +82,8 @@ class Example(DataMixin, ListView):
 
     def get_queryset(self): #По какому критерию отбира  ем
         return Example_Models.objects.all()
+
+
     #Реализация Example_Detail на ListView
     # def get_queryset(self):
     #     return Example_Models.objects.get(slug=self.kwargs["slug"])

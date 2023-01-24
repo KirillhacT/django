@@ -31,7 +31,7 @@
 							</div>
 							<div class="text left">
 
-								<h4><a href="{{ post.id }}">{{ post.title }}</a></h4>
+								<h4><a href="{% url 'current_post' post.slug %}">{{ post.title }}</a></h4>
 								<p>{{ post.description }}</p>
 								<p>Автор:  {{ post.author }}</p>
 							</div>
