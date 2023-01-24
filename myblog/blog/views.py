@@ -54,6 +54,7 @@ class PostDetail(ListView):
 
 
 
+
 class AddComments(View):
     """Добавление комментариев"""
     def post(self, request, pk):
