@@ -10,6 +10,11 @@ class CommentsForm(forms.ModelForm):
         model = Comments
         fields = ("name", "email", "text_comments")
 
+class AddPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ("title", "description", "author", "date", "image", "slug")
+
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(label="Логин", widget=forms.TextInput(attrs={'class': 'form-input'}))

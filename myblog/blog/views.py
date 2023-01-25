@@ -6,7 +6,7 @@ from django.views.generic.base import View
 from django.views.generic import DetailView, ListView, CreateView
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Comments, Example_Models
-from .form import CommentsForm, RegisterUserForm, LoginUserForm
+from .form import CommentsForm, RegisterUserForm, LoginUserForm, AddPostForm
 
 from .utils import *
 
@@ -51,10 +51,6 @@ class PostDetail(ListView):
     def get_queryset(self):
         return Post.objects.get(slug=self.kwargs.get("slug"))
 
-
-
-
-
 class AddComments(View):
     """Добавление комментариев"""
     def post(self, request, pk):
@@ -67,6 +63,28 @@ class AddComments(View):
 
         # print(f"{request.POST}")
         # return redirect("/")
+
+# class AddPost(CreateView):
+#     form_class = AddPostForm
+#     template_name = "blog/add_post.html"
+#     context_object_name = "form"
+#     success_url = reverse_lazy('home')
+
+class AddPost(ListView):
+    model = Post
+    template_name = "blog/add_post"
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Slug example
 class Example(DataMixin, ListView):
