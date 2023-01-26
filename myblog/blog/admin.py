@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Post, Comments, Example_Models
+from .models import PostOn, Comments, Example_Models
 
-@admin.register(Post)
+@admin.register(PostOn)
 class PostAdmin(admin.ModelAdmin):
     list_display = ("title", "author")
 

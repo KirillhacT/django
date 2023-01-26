@@ -1,14 +1,16 @@
 from django.contrib.auth import logout, login
+from .models import PostOn, Comments
 from django.contrib.auth.views import LoginView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic.base import View
 from django.views.generic import DetailView, ListView, CreateView
-from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Comments, Example_Models
-from .form import CommentsForm, RegisterUserForm, LoginUserForm, AddPostForm
+# from django.contrib.auth.forms import UserCreationForm
+
+from .form import CommentsForm, RegisterUserForm, LoginUserForm
 
 from .utils import *
+
 
 # class PostView(View):
 #     """"Вывод записи"""
@@ -21,17 +23,17 @@ from .utils import *
 #         return render(request, template, context=context)
 
 class PostView(ListView):
-    model = Post
+    model = PostOn
     template_name = "blog/index.html"
     context_object_name = "post_list"
-    def get_queryset(self):
-        return Post.objects.all()
+    # def get_queryset(self):
+    #     return PostOn.objects.all()
 
 
 # class PostDetail(View):
 #     """отдельная страница записи"""
 #     def get(self, request, slug):
-#         post = Post.objects.get(slug=slug)
+#         post = PostOn.objects.get(slug=slug)
 #         template = 'blog/blog_detail.html'
 #         list_of_comments = Comments.objects.filter(post=post)
 #         context = {
@@ -41,7 +43,7 @@ class PostView(ListView):
 #         return render(request, template, context=context)
 
 class PostDetail(ListView):
-    model = Post
+    model = PostOn
     template_name = "blog/blog_detail.html"
     context_object_name = "post"
     def get_context_data(self, **kwargs):
@@ -49,38 +51,22 @@ class PostDetail(ListView):
         context["list_of_comments"] = Comments.objects.filter(post=context["post"])
         return context
     def get_queryset(self):
-        return Post.objects.get(slug=self.kwargs.get("slug"))
-
-class AddComments(View):
-    """Добавление комментариев"""
-    def post(self, request, pk):
-        form = CommentsForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.post_id = pk
-            form.save()
-        return redirect(f"/{pk}")
-
-        # print(f"{request.POST}")
-        # return redirect("/")
-
-# class AddPost(CreateView):
-#     form_class = AddPostForm
-#     template_name = "blog/add_post.html"
-#     context_object_name = "form"
-#     success_url = reverse_lazy('home')
-
-class AddPost(ListView):
-    model = Post
-    template_name = "blog/add_post"
+        return PostOn.objects.get(slug=self.kwargs.get("slug"))
 
 
 
-
-
-
-
-
+# class AddComments(View):
+#     """Добавление комментариев"""
+#     def post(self, request, pk):
+#         form = CommentsForm(request.POST)
+#         if form.is_valid():
+#             form = form.save(commit=False)
+#             form.post_id = pk
+#             form.save()
+#         return redirect(f"/{pk}")
+#
+#         # print(f"{request.POST}")
+#         # return redirect("/")
 
 
 
@@ -99,8 +85,8 @@ class Example(DataMixin, ListView):
         c_def = self.get_user_context(title="Главная")
         return dict(list(context.items()) + list(c_def.items()))
 
-    def get_queryset(self): #По какому критерию отбира  ем
-        return Example_Models.objects.all()
+    # def get_queryset(self): #По какому критерию отбира  ем
+    #     return Example_Models.objects.all()
 
 
     #Реализация Example_Detail на ListView

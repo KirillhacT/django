@@ -1,6 +1,6 @@
 from django.db import models
 
-class Post(models.Model):
+class PostOn(models.Model):
     """данные о посте"""
     title = models.CharField("Заголовок записи", max_length=100)
     description = models.TextField("Текст записи")
@@ -20,7 +20,7 @@ class Comments(models.Model):
     email = models.EmailField()
     name = models.CharField("Имя", max_length=50)
     text_comments = models.TextField("Текст комментария", max_length=2000)
-    post = models.ForeignKey(Post, verbose_name="Публикация", on_delete=models.CASCADE)
+    post = models.ForeignKey(PostOn, verbose_name="Публикация", on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Комментарий"
@@ -33,7 +33,7 @@ class Comments(models.Model):
 class Example_Models(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
-    posts = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name="Посты", null=True)
+    posts = models.ForeignKey(PostOn, on_delete=models.CASCADE, verbose_name="Посты", null=True)
     # def get_absolute_url(self):
     #     return reverse()
 

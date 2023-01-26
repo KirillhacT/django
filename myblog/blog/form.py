@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Comments, Post
+from .models import Comments, PostOn
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
@@ -10,10 +10,13 @@ class CommentsForm(forms.ModelForm):
         model = Comments
         fields = ("name", "email", "text_comments")
 
-class AddPostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ("title", "description", "author", "date", "image", "slug")
+
+# class AddPostForm(forms.ModelForm):
+#     class Meta:
+#         model = PostOn
+#         fields = ("__all__")
+
+
 
 
 class RegisterUserForm(UserCreationForm):
